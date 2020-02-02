@@ -17,11 +17,20 @@ class WeatherDetailsView: UIViewController {
     
     @IBOutlet weak var weatherImages: UIImageView!  //天気情報のimage
     
+    @IBOutlet weak var tokyoCity: UILabel!          //東京の街
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.weatherLabel!.text = self.weather!
         weatherLabel.adjustsFontSizeToFitWidth = true
+        
+        tokyoCity.text = "🗼🏢🏢🚶‍♂️🚶‍♀️🏢🏢🏢"
+        tokyoCity.backgroundColor = UIColor.cyan
+        tokyoCity.adjustsFontSizeToFitWidth = true
+        
+        weatherImages.backgroundColor = UIColor.cyan
         getWeatherImage()
         
         // Do any additional setup after loading the view.
@@ -32,33 +41,27 @@ class WeatherDetailsView: UIViewController {
         switch weatherMain! {
         case "Thunderstorm":
             let image:UIImage = UIImage(named: "11d.png")!
-            let imageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
             
         case "Drizzle", "Rain":
             let image:UIImage = UIImage(named: "09d.png")!
-            let imageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
         
         case "Snow":
             let image:UIImage = UIImage(named: "13d.png")!
-            let imageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
         
         case "Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squall", "Tornado":
             let image:UIImage = UIImage(named: "50d.png")!
-            let imageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
 
         case "Clear":
             let image: UIImage = UIImage(named: "01d.png")!
-            let imageView: UIImageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
         
         case "Clouds":
             let image:UIImage = UIImage(named: "04d.png")!
-            let imageView = UIImageView(image: image)
-            self.weatherImages.addSubview(imageView)
+            self.weatherImages.image = image
 
         default:
             print("Error:画像取得失敗")
