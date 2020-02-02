@@ -45,11 +45,55 @@
                     <navigationItem key="navigationItem" id="omB-eh-0mO"/>
                     <connections>
                         <outlet property="tableView" destination="swU-DB-9w1" id="lQe-st-FjF"/>
+                        <segue destination="re0-0N-HcA" kind="show" identifier="cellSegue" id="71S-LT-rNu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="971.25" y="96.126760563380287"/>
+            <point key="canvasLocation" x="578" y="95"/>
+        </scene>
+        <!--Weather Details View-->
+        <scene sceneID="2DP-xz-seK">
+            <objects>
+                <viewController id="re0-0N-HcA" customClass="WeatherDetailsView" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rcp-ES-Dht">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZc-Uo-f2j">
+                                <rect key="frame" x="50" y="347" width="220" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iiX-mH-hPj">
+                                <rect key="frame" x="50" y="144" width="220" height="173"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="Kok-nV-z1n"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iiX-mH-hPj" firstAttribute="leading" secondItem="9E0-ii-vJm" secondAttribute="leading" constant="50" id="3gc-08-4pv"/>
+                            <constraint firstItem="9E0-ii-vJm" firstAttribute="trailing" secondItem="iiX-mH-hPj" secondAttribute="trailing" constant="50" id="DtF-6e-c0e"/>
+                            <constraint firstItem="9E0-ii-vJm" firstAttribute="bottom" secondItem="xZc-Uo-f2j" secondAttribute="bottom" constant="200" id="WzQ-qp-3rZ"/>
+                            <constraint firstItem="iiX-mH-hPj" firstAttribute="top" secondItem="9E0-ii-vJm" secondAttribute="top" constant="80" id="ZaL-3x-VRG"/>
+                            <constraint firstItem="xZc-Uo-f2j" firstAttribute="leading" secondItem="9E0-ii-vJm" secondAttribute="leading" constant="50" id="aPN-Oy-R9e"/>
+                            <constraint firstItem="xZc-Uo-f2j" firstAttribute="centerX" secondItem="iiX-mH-hPj" secondAttribute="centerX" id="nsg-lv-7eB"/>
+                            <constraint firstItem="xZc-Uo-f2j" firstAttribute="top" secondItem="iiX-mH-hPj" secondAttribute="bottom" constant="30" id="q7t-9F-U27"/>
+                            <constraint firstItem="9E0-ii-vJm" firstAttribute="trailing" secondItem="xZc-Uo-f2j" secondAttribute="trailing" constant="50" id="z8U-mX-ssE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9E0-ii-vJm"/>
+                    </view>
+                    <connections>
+                        <outlet property="weatherImages" destination="iiX-mH-hPj" id="Cui-X5-QRg"/>
+                        <outlet property="weatherLabel" destination="xZc-Uo-f2j" id="OlY-hO-O6h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HQ5-7W-iGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1235.625" y="90.845070422535215"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qxK-C4-4c2">

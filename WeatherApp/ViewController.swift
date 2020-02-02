@@ -17,21 +17,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var weatherDetails = [String?]()    //天気情報：天気詳細
     
+    var weatherGroups = [String?]()     //天気情報：天気グループ
+    
     var weatherInfos = [String?]()      //一列分の天気情報
+    
+    var weatherGroupInfo = [String?]()  //天気情報の配列
     
     let cellNum = 40                    //JSON情報の配列数
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "Tokyo🗼Weather"         // Navigation Barのタイトルを設定
-        //view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self    // dataSouceプロパティに自身(WeatherListViewController)を代入
         
         getWeatherInfo()
         
     }
+    
+    //WeatherDetailsViewに遷移する準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let weatherDetailsView: WeatherDetailsView = segue.destination as! WeatherDetailsView
+        if segue.identifier == "cellSegue" {
+            let indexPath = self.tableView.indexPathForSelectedRow
+            weatherDetailsView.weather = weatherInfos[indexPath!.row]
+            weatherDetailsView.weatherMain = weatherGroups[indexPath!.row]
+        }
+        
+        
+    }
+    
     
     func getWeatherInfo(){
         
@@ -52,22 +67,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 for i in 0...self.cellNum {
                     let weatherInfoLib1: String? = json[i]["dt_txt"].string
                     let weatherInfoLib2: String? = json[i]["weather"][0]["description"].string
-                    if weatherInfoLib1 == nil && weatherInfoLib2 == nil{
+                    let weatherInfoLib3: String? = json[i]["weather"][0]["main"].string
+                    
+                    if weatherInfoLib1 == nil && weatherInfoLib2 == nil && weatherInfoLib3 == nil{
                         return
                     }
                     self.weatherDayTimes.append(weatherInfoLib1)
                     self.weatherDetails.append(weatherInfoLib2)
                     self.weatherInfos.append("\(self.weatherDayTimes[i]!) : \(self.weatherDetails[i]!)")
+                    self.weatherGroups.append(weatherInfoLib3)
+                    
                 }
                 
             }
-            //print(self.weatherInfos.count)
             self.tableView.reloadData()
         }
     }
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return 40
         return self.weatherInfos.count
     }
     
@@ -75,17 +92,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 再利用可能な cell を得る
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        //print(self.weatherInfos)
         cell.textLabel?.text = self.weatherInfos[indexPath.row]
-        //cell.textLabel?.text = self.weatherInfos[0]
-        //cell.textLabel!.text = "test"
         
         return cell
     }
     
     // 各セルを選択した時に実行されるメソッド
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "cellSegue",sender: nil)
     }
     
     
