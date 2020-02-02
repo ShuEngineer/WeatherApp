@@ -59,11 +59,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             
             let json = JSON(object)
-            //json.forEach{ (_, json) in
             json.forEach{ (key, json) in
-                //print(key)
-                //print(json)
-                
+                //天気情報の取得
                 for i in 0...self.cellNum {
                     let weatherInfoLib1: String? = json[i]["dt_txt"].string
                     let weatherInfoLib2: String? = json[i]["weather"][0]["description"].string
