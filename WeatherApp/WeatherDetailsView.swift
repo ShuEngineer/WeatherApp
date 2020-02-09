@@ -12,28 +12,34 @@ class WeatherDetailsView: UIViewController {
     
     var weather: String?       //遷移元から天気データを取得
     var weatherMain: String?   //天気情報のメイングループ
+    var temp: Double?          //遷移元から気温
     
-    @IBOutlet weak var weatherLabel: UILabel!       //天気情報のラベル
+    var tempStr: String?
     
     @IBOutlet weak var weatherImages: UIImageView!  //天気情報のimage
+    @IBOutlet weak var weatherLabel: UILabel!       //天気情報のラベル
+    
+    @IBOutlet weak var weatherTemp: UILabel!        //天気情報：気温ラベル
     
     @IBOutlet weak var tokyoCity: UILabel!          //東京の街
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.weatherLabel!.text = self.weather!
-        weatherLabel.adjustsFontSizeToFitWidth = true
         
-        tokyoCity.text = "🗼🏢🏢🚶‍♂️🚶‍♀️🏢🏢🏢"
+        weatherLabel.adjustsFontSizeToFitWidth = true
+        tokyoCity.text = "🗼🏢🏢🚶‍♂️🚶‍♀️🏢🏢🌳"
         tokyoCity.backgroundColor = UIColor.cyan
         tokyoCity.adjustsFontSizeToFitWidth = true
-        
         weatherImages.backgroundColor = UIColor.cyan
-        getWeatherImage()
         
-        // Do any additional setup after loading the view.
+        getWeatherImage()
+
+        self.weatherTemp!.text = "Temperature : \(getWeatherTemp(self.temp!)) ℃"
+        
     }
     
     func getWeatherImage(){
@@ -67,6 +73,19 @@ class WeatherDetailsView: UIViewController {
             print("Error:画像取得失敗")
         }
         
+        
+        
+    }
+    
+    func getWeatherTemp(_ temp: Double) -> String{
+        
+        var tempResult : Double
+        let absoluteTemperature = 273.15
+        var tempResultStr : String
+        
+        tempResult = (round((temp - absoluteTemperature)*10)/10)
+        tempResultStr = String(tempResult)
+        return tempResultStr
     }
 
     /*

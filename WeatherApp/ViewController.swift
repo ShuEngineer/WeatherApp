@@ -23,7 +23,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var weatherGroupInfo = [String?]()  //天気情報の配列
     
+    var weatherTemp = [Double?]()       //天気情報：気温
     let cellNum = 40                    //JSON情報の配列数
+    
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         getWeatherInfo()
         
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(ViewController.refresh(sender:)), for: .valueChanged)
     }
     
     //WeatherDetailsViewに遷移する準備
@@ -42,7 +47,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let indexPath = self.tableView.indexPathForSelectedRow
             weatherDetailsView.weather = weatherInfos[indexPath!.row]
             weatherDetailsView.weatherMain = weatherGroups[indexPath!.row]
-        }
+            weatherDetailsView.temp = weatherTemp[indexPath!.row]
+             }
         
         
     }
@@ -65,15 +71,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let weatherInfoLib1: String? = json[i]["dt_txt"].string
                     let weatherInfoLib2: String? = json[i]["weather"][0]["description"].string
                     let weatherInfoLib3: String? = json[i]["weather"][0]["main"].string
+                    let weatherInfoLib4: Double? = json[i]["main"]["temp"].double //気温
                     
-                    if weatherInfoLib1 == nil && weatherInfoLib2 == nil && weatherInfoLib3 == nil{
+                    
+                    if weatherInfoLib1 == nil && weatherInfoLib2 == nil && weatherInfoLib3 == nil
+                       && weatherInfoLib4 == nil{
                         return
                     }
                     self.weatherDayTimes.append(weatherInfoLib1)
                     self.weatherDetails.append(weatherInfoLib2)
                     self.weatherInfos.append("\(self.weatherDayTimes[i]!) : \(self.weatherDetails[i]!)")
                     self.weatherGroups.append(weatherInfoLib3)
-                    
+                    self.weatherTemp.append(weatherInfoLib4)
                 }
                 
             }
@@ -104,6 +113,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
     }
     
+    //Refresh
+    @objc func refresh(sender: UIRefreshControl) {
+        getWeatherInfo()
+        self.refreshControl.endRefreshing()
+    }
 
 }
 
